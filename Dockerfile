@@ -50,6 +50,12 @@ VOLUME /var/lib/rabbitmq
 RUN ln -sf /var/lib/rabbitmq/.erlang.cookie /root/
 
 RUN rabbitmq-plugins enable --offline rabbitmq_stomp
+RUN apt-get update && apt-get -y install python wget
+RUN rabbitmq-plugins enable rabbitmq_management
+COPY conf/rabbitmqadmin /usr/bin/
+RUN chmod +x /usr/bin/rabbitmqadmin
+RUN wget https://s3.amazonaws.com/xpatterns-deployment-redhat/redhat-7.1/rabbitmq/rabbit.config -P /tmp/
+
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]

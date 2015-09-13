@@ -60,4 +60,13 @@ if [ "$1" = 'rabbitmq-server' ]; then
 	set -- gosu rabbitmq tini -- "$@"
 fi
 
-exec "$@"
+exec "$@"&
+
+sleep 5
+
+rabbitmqadmin import /tmp/rabbit.config
+
+# Infinite loop
+while true; do 
+	sleep 10
+done
