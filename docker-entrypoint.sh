@@ -62,8 +62,9 @@ fi
 
 exec "$@"&
 
-sleep 5
+sleep 15
 
+echo -e "\n---- Importing rabbit.config ----\n"
 rabbitmqadmin import /tmp/rabbit.config
 
 # Infinite loop
