@@ -32,10 +32,10 @@ ENV RABBITMQ_LOGS=- RABBITMQ_SASL_LOGS=-
 
 # http://www.rabbitmq.com/install-debian.html
 # "Please note that the word testing in this line refers to the state of our release of RabbitMQ, not any particular Debian distribution."
-RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys F78372A06FF50C80464FC1B4F7B8CEA6056E8E56
+RUN curl https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | apt-key add -
 RUN echo 'deb http://www.rabbitmq.com/debian/ testing main' > /etc/apt/sources.list.d/rabbitmq.list
 
-ENV RABBITMQ_VERSION 3.5.5-3
+ENV RABBITMQ_VERSION 3.6.2-1
 
 RUN apt-get update && apt-get install -y rabbitmq-server=$RABBITMQ_VERSION --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
@@ -54,7 +54,7 @@ RUN apt-get update && apt-get -y install python wget
 RUN rabbitmq-plugins enable rabbitmq_management
 COPY conf/rabbitmqadmin /usr/bin/
 RUN chmod +x /usr/bin/rabbitmqadmin
-RUN wget https://s3.amazonaws.com/xpatterns/configs/rabbitmq/0.0.1/rabbit.config -P /tmp/
+RUN wget https://s3.amazonaws.com/xpatterns/configs/rabbitmq/0.0.2/rabbit.config -P /tmp/
 
 
 COPY docker-entrypoint.sh /
